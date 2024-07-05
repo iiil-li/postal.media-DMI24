@@ -1,0 +1,23 @@
+#!/bin/bash
+
+# Base URL for the API
+BASE_URL="https://api.digitalnz.org/records.json?text=stamped%20envelope&and%5Bcategory%5D%5B%5D=Images&direction=asc&per_page=100&facets_per_page=10&exclude_filters_from_facets=false"
+# Authentication token
+AUTH_TOKEN="[INSERT API KEY]"
+
+# Loop through pages 1 to 21
+for PAGE in {1..21}
+do
+  # Output file name
+  OUTPUT_FILE="stamped-envelope-response_page_${PAGE}.json"
+
+  # Run curl command
+  curl -X 'GET' \
+    "${BASE_URL}&page=${PAGE}" \
+    -H "accept: application/json" \
+    -H "Authentication-Token: ${AUTH_TOKEN}" \
+    -o "${OUTPUT_FILE}"
+
+  echo "Saved response for page ${PAGE} to ${OUTPUT_FILE}"
+  sleep 1
+done
